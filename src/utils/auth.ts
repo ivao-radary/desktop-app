@@ -2,7 +2,7 @@ export const getVatsimAuthUrl = (deepLink: string): string | undefined => {
     try {
         const url = new URL(deepLink);
 
-        if (url.protocol !== 'vatsim-radar:' || url.hostname || url.pathname !== '/auth/vatsim') {
+        if (url.protocol !== 'ivao-radar:' || url.hostname || url.pathname !== '/auth/vatsim') {
             return;
         }
 
@@ -20,7 +20,7 @@ export const getNavigraphAuthUrl = (deepLink: string): string | undefined => {
     try {
         const url = new URL(deepLink);
 
-        if (url.protocol !== 'vatsim-radar:' || url.hostname || url.pathname !== '/auth/navigraph') {
+        if (url.protocol !== 'ivao-radar:' || url.hostname || url.pathname !== '/auth/navigraph') {
             return;
         }
 

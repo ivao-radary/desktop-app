@@ -17,8 +17,8 @@ permissions:
 
 env:
   RELEASE_CHANNEL: ${{ inputs.channel }}
-  VITE_DOMAIN: ${{ inputs.channel == 'next' && 'https://next.vatsim-radar.com' || 'https://vatsim-radar.com' }}
-  VITE_UPDATE_BASE_URL: https://r2.vatsim-radar.com/app/${{ inputs.channel }}
+  VITE_DOMAIN: ${{ inputs.channel == 'next' && 'https://next.ivao-radar.com' || 'https://ivao-radar.com' }}
+  VITE_UPDATE_BASE_URL: https://r2.ivao-radar.com/app/${{ inputs.channel }}
   CLOUDFLARE_R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_R2_ACCOUNT_ID }}
   CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
   CLOUDFLARE_R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
@@ -118,10 +118,10 @@ jobs:
           mkdir -p release-assets
           find out \
             -type f \( \
-              -name 'vatsim-radar-win32-*.exe' -o \
-              -name 'vatsim-radar-*.dmg' -o \
-              -name 'vatsim-radar-*.deb' -o \
-              -name 'vatsim-radar-*.zip' -o \
+              -name 'ivao-radar-win32-*.exe' -o \
+              -name 'ivao-radar-*.dmg' -o \
+              -name 'ivao-radar-*.deb' -o \
+              -name 'ivao-radar-*.zip' -o \
               -name 'RELEASES' \
           \) -exec cp {} release-assets/ \;
           find release-assets -maxdepth 1 -type f -print | sort
@@ -130,7 +130,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: vatsim-radar-${{ matrix.platform }}-${{ matrix.arch }}
+          name: ivao-radar-${{ matrix.platform }}-${{ matrix.arch }}
           path: release-assets/*
           if-no-files-found: error
 
@@ -177,11 +177,11 @@ jobs:
           if [[ "$RELEASE_CHANNEL" == "next" ]]; then
             release_tag="next-v${version}"
             prerelease="true"
-            release_name="VATSIM Radar ${version} Next"
+            release_name="IVAO Radar ${version} Next"
           else
             release_tag="v${version}"
             prerelease="false"
-            release_name="VATSIM Radar ${version}"
+            release_name="IVAO Radar ${version}"
           fi
 
           echo "RELEASE_TAG=$release_tag" >> "$GITHUB_ENV"

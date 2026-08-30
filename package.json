@@ -1,5 +1,5 @@
 {
-  "name": "vatsim-radar-desktop",
+  "name": "ivao-radar-desktop",
   "version": "0.0.27",
   "license": "CC BY-NC 4.0",
   "main": ".vite/build/app.js",

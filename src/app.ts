@@ -23,9 +23,9 @@ const domain = process.env.VITE_DOMAIN!;
 const isNextRelease = domain.includes('next.');
 const updateBaseUrl =
     process.env.VITE_UPDATE_BASE_URL ??
-    `https://r2.vatsim-radar.com/app/${isNextRelease ? 'next' : 'prod'}`;
-const appDisplayName = isNextRelease ? 'VATSIM Radar Next' : 'VATSIM Radar';
-const appUserModelId = 'com.squirrel.vatsim_radar_desktop.vatsim-radar';
+    `https://r2.ivao-radar.com/app/${isNextRelease ? 'next' : 'prod'}`;
+const appDisplayName = isNextRelease ? 'IVAO Radar Next' : 'IVAO Radar';
+const appUserModelId = 'com.squirrel.vatsim_radar_desktop.ivao-radar';
 const getAssetPath = (...parts: string[]) => {
     return app.isPackaged
         ? path.join(process.resourcesPath, 'assets', ...parts)
@@ -147,12 +147,12 @@ const handleDeeplinkAuth = (deepLink: string) => {
 
 if (process.defaultApp) {
     if (process.argv.length >= 2) {
-        app.setAsDefaultProtocolClient('vatsim-radar', process.execPath, [
+        app.setAsDefaultProtocolClient('ivao-radar', process.execPath, [
             path.resolve(process.argv[1]),
         ]);
     }
 } else {
-    app.setAsDefaultProtocolClient('vatsim-radar');
+    app.setAsDefaultProtocolClient('ivao-radar');
 }
 
 const hasSingleInstanceLock = app.requestSingleInstanceLock();
@@ -162,7 +162,7 @@ if (!hasSingleInstanceLock) {
 
 if (hasSingleInstanceLock) {
     app.on('second-instance', (_event, commandLine) => {
-        const deepLink = commandLine.find((argument) => argument.startsWith('vatsim-radar:'));
+        const deepLink = commandLine.find((argument) => argument.startsWith('ivao-radar:'));
         if (deepLink) handleDeeplinkAuth(deepLink);
 
         const win = BrowserWindow.getAllWindows()[0];
@@ -174,7 +174,7 @@ if (hasSingleInstanceLock) {
         handleDeeplinkAuth(url);
     });
 
-    const startupDeepLink = process.argv.find((argument) => argument.startsWith('vatsim-radar:'));
+    const startupDeepLink = process.argv.find((argument) => argument.startsWith('ivao-radar:'));
     if (startupDeepLink) handleDeeplinkAuth(startupDeepLink);
 }
 
@@ -186,7 +186,7 @@ const createWindow = async () => {
         backgroundColor: '#1A1A1A',
         autoHideMenuBar: true,
         fullscreenable: true,
-        tabbingIdentifier: 'vatsim-radar',
+        tabbingIdentifier: 'ivao-radar',
         webPreferences: getWebPreferences(),
         width: store.get('width') || 640,
         height: store.get('height') || 360,
@@ -234,7 +234,7 @@ const createWindow = async () => {
                 title: appDisplayName,
                 autoHideMenuBar: true,
                 fullscreenable: true,
-                tabbingIdentifier: 'vatsim-radar',
+                tabbingIdentifier: 'ivao-radar',
                 backgroundColor: '#1A1A1A',
                 icon,
                 webPreferences: getWebPreferences(),

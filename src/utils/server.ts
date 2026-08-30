@@ -30,7 +30,7 @@ export async function initDiscord() {
     try {
         if (!client) {
             client = new Client({
-                clientId: '1229876151602905220',
+                clientId: '1542187553652744192',
             });
 
             client.on('ready', async () => {
@@ -90,12 +90,12 @@ export function startServer() {
 
                     try {
                         const activity = {
-                            name: 'VATSIM Radar',
+                            name: 'IVAO Radar',
                             details: body.details,
                             detailsUrl: body.pilotCallsign
-                                ? `https://vatsim-radar.com/?pilot=${ body.pilotCallsign }`
+                                ? `https://ivao-radar.com/?pilot=${ body.pilotCallsign }`
                                 : body.atcCallsign
-                                    ? `https://vatsim-radar.com/?atc=${ body.atcCallsign }`
+                                    ? `https://ivao-radar.com/?atc=${ body.atcCallsign }`
                                     : undefined,
                             state: body.state,
                             startTimestamp: body.startTimestamp ? new Date(body.startTimestamp) : undefined,
@@ -104,8 +104,8 @@ export function startServer() {
                                     {
                                         label: `View ${ body.pilotCallsign || body.atcCallsign }`,
                                         url: body.pilotCallsign
-                                            ? `https://vatsim-radar.com/?pilot=${ body.pilotCallsign }`
-                                            : `https://vatsim-radar.com/?atc=${ body.atcCallsign }`,
+                                            ? `https://ivao-radar.com/?pilot=${ body.pilotCallsign }`
+                                            : `https://ivao-radar.com/?atc=${ body.atcCallsign }`,
                                     },
                                 ]
                                 : undefined,

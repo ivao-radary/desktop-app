@@ -8091,9 +8091,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vatsim-radar-desktop@workspace:.":
+"ivao-radar-desktop@workspace:.":
   version: 0.0.0-use.local
-  resolution: "vatsim-radar-desktop@workspace:."
+  resolution: "ivao-radar-desktop@workspace:."
   dependencies:
     "@electron-forge/cli": "npm:7.11.2"
     "@electron-forge/maker-deb": "npm:7.11.2"

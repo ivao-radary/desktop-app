@@ -11,9 +11,9 @@ import VitePlugin from '@electron-forge/plugin-vite';
 const { version } = JSON.parse(readFileSync('package.json', 'utf8')) as { version: string };
 const releaseChannel = process.env.RELEASE_CHANNEL === 'next' ? 'next' : 'prod';
 const isNextRelease = releaseChannel === 'next';
-const appDomain = process.env.VITE_DOMAIN ?? (isNextRelease ? 'https://next.vatsim-radar.com' : 'https://vatsim-radar.com');
-const appDisplayName = isNextRelease ? 'VATSIM Radar Next' : 'VATSIM Radar';
-const updateBaseUrl = process.env.VITE_UPDATE_BASE_URL ?? `https://r2.vatsim-radar.com/app/${ releaseChannel }`;
+const appDomain = process.env.VITE_DOMAIN ?? (isNextRelease ? 'https://next.ivao-radar.com' : 'https://ivao-radar.com');
+const appDisplayName = isNextRelease ? 'IVAO Radar Next' : 'IVAO Radar';
+const updateBaseUrl = process.env.VITE_UPDATE_BASE_URL ?? `https://r2.ivao-radar.com/app/${ releaseChannel }`;
 const cloudflareR2AccountId = process.env.CLOUDFLARE_R2_ACCOUNT_ID;
 const cloudflareR2Endpoint = process.env.CLOUDFLARE_R2_ENDPOINT ??
     (cloudflareR2AccountId ? `https://${ cloudflareR2AccountId }.r2.cloudflarestorage.com` : undefined);
@@ -26,10 +26,10 @@ const getUpdateBaseUrl = (platform: string, arch: string) => `${ updateBaseUrl }
 const getArtifactName = (artifactPath: string, platform: string, arch: string) => {
     const extension = extname(artifactPath);
 
-    if (extension === '.exe') return `vatsim-radar-${ platform }-${ arch }.exe`;
-    if (extension === '.dmg') return `vatsim-radar-${ platform }-${ arch }.dmg`;
-    if (extension === '.deb') return `vatsim-radar-${ platform }-${ arch }.deb`;
-    if (extension === '.zip') return `vatsim-radar-${ platform }-${ arch }.zip`;
+    if (extension === '.exe') return `ivao-radar-${ platform }-${ arch }.exe`;
+    if (extension === '.dmg') return `ivao-radar-${ platform }-${ arch }.dmg`;
+    if (extension === '.deb') return `ivao-radar-${ platform }-${ arch }.deb`;
+    if (extension === '.zip') return `ivao-radar-${ platform }-${ arch }.zip`;
 
     return undefined;
 };
@@ -38,7 +38,7 @@ const config: ForgeConfig = {
     packagerConfig: {
         asar: true,
         name: appDisplayName,
-        executableName: 'vatsim-radar',
+        executableName: 'ivao-radar',
         overwrite: true,
         prune: true,
         icon: process.env.PACKAGER_ICON ?? './src/assets/favicon.ico',
@@ -74,7 +74,7 @@ const config: ForgeConfig = {
             owners: 'Danila Rodichkin',
             iconUrl: `${ appDomain }/favicon.ico`,
             setupIcon: join('src', 'assets', 'favicon.ico'),
-            setupExe: 'vatsim-radar-win32-x64.exe',
+            setupExe: 'ivao-radar-win32-x64.exe',
             version,
         }, ['win32']),
         new MakerDMG({
@@ -87,17 +87,17 @@ const config: ForgeConfig = {
         }, ['win32', 'darwin', 'linux']),
         new MakerDeb({
             options: {
-                name: 'vatsim-radar',
+                name: 'ivao-radar',
                 productName: appDisplayName,
                 genericName: appDisplayName,
                 description: `${ appDisplayName } desktop application`,
                 productDescription: `Desktop wrapper for ${ appDisplayName }.`,
                 maintainer: 'Danila Rodichkin',
                 homepage: appDomain,
-                bin: 'vatsim-radar',
+                bin: 'ivao-radar',
                 icon: join('src', 'assets', 'icon.png'),
                 categories: ['Network'],
-                mimeType: ['x-scheme-handler/vatsim-radar'],
+                mimeType: ['x-scheme-handler/ivao-radar'],
             },
         }),
     ],
@@ -123,19 +123,7 @@ const config: ForgeConfig = {
             return makeResults;
         },
     },
-    publishers: [
-        new PublisherS3({
-            bucket: process.env.CLOUDFLARE_R2_BUCKET ?? 'tiles',
-            folder: `app/${ releaseChannel }`,
-            endpoint: cloudflareR2Endpoint,
-            region: process.env.CLOUDFLARE_R2_REGION ?? 'auto',
-            accessKeyId: process.env.CLOUDFLARE_R2_ACCESS_KEY_ID,
-            secretAccessKey: process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY,
-            omitAcl: true,
-            s3ForcePathStyle: true,
-            releaseFileCacheControlMaxAge: 60,
-        }),
-    ],
+
 };
 
 export default config;
